@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Street Explorer</title>
+<link href="https://fonts.googleapis.com/css2?family=Open+Sans&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+<script src="https://api-maps.yandex.ru/2.1/?lang=ru_RU&amp;apikey=beb4e946-4d09-4e34-8e56-3e4c1c16a95c"></script>
+<script src="script.js"></script>
+</head>
+
+<body>
+
+<div style="background-color: #333; overflow: hidden">
+	<h1>Street Explorer</h1>
+	<h3>По всем вопросам: kuzma.kobets228@mail.ru<br/><a href=https://t.me/nthk92>Telegram</a></h3>
+	<div class="menu">
+		<button id="gameButton" onclick="checkGame()">Играть</button>
+		<button id="rulesButton" onclick="showPage('rules'); hideGame()">Правила</button>
+		<button id="leaderboardButton" onclick="showPage('leaderboard'); hideGame()">Лидеры</button>
+		<button id="guestAccount_button" onclick="showPage('guestAccount'); hideGame()">Аккаунт</button>
+		<button id="loggedAccount_button" onclick="showPage('loggedAccount'); hideGame()" style="display: none;"></button>
+	</div>
+</div>
+
+<div id="map" class="map" style="display: none;"></div>
+
+<div class="container">
+	<div id="player1" class="player" style="display: none;"></div>
+	<button id="confirmGuessButton" style="display: none" onclick="roundResult()">Подтвердить</br>ответ →</button>	<button id="returnButton" style="display: none" onclick="returnToStart()">Вернуться</br>к началу</button>
+	<h2 id="currentRoundText" style="display: none">Раунд</h2>
+	<button id="gameAccountWarning" onclick="showPage('guestAccount'); hideGame()" class="astext" style="display: none">Войдите в аккаунт, чтобы сохранять статистику</button>
+	<h2 id="endGameText" style="display: none"></h2>
+	<button id="continueButton" style="display: none" onclick="restartAfterGame()">Продолжить</button>
+	<h2 id="resultText" style="text-align: center; display: none"></h2>
+	<button id="nextRoundButton" onclick="nextRound()" style="margin-top: 40px; display: none">Следующий раунд</button>
+</div>
+
+<div class="content" id="game" style="text-align: center">
+	</br>
+	</br>
+	<button id="accountWarning" onclick="showPage('guestAccount'); hideGame()" class="astext">Войдите в аккаунт, чтобы сохранять статистику.</button>
+	<h2>Определите своё местоположение по панорамному виду местности</br>и отметьте соответствующую точку на карте.</h2>
+	<button id="startGameButton" onclick="sendPanoramaRequest();createMap()" style="top: 50px">Начать игру</button>
+</div>
+
+<div class="content" id="rules" style="display: none; padding: 10px">
+	<h2 style="margin-left:20%; margin-right:20%">Правила игры Street Explorer</h2>
+    <p style="margin-left:20%; margin-right:20%">В Street Explorer используются панорамы Яндекс Карт. В каждом из пяти раундов игроку предоставляется панорама определённого места, а также карта мира. Задача игрока заключается в том, чтобы по панорамному виду местности определить местоположение этого места. Для этого стоит обращать внимание на архитектуру домов, знаки с обозначением населённых пунктов и улиц, особенности дорожной разметки, рекламные знаки и многое другое.<br/><br/>После анализа местности можно ставить маркер, соответствующий предполагаемому местоположению, на карту. По окончании раунда будет выведено окно с ответом игрока и маркером настоящего местоположения, расстояние между ними и количество полученных очков, в зависимости от расстояния.<br/>За раунд можно получить от 0 до 5000 очков.<br/><br/>После пятого раунда определяется среднее арифметическое всех полученных очков за предыдущие раунды, что и является итоговым счётом игры. Итоговый счёт игры влияет на среднее арифметическое общего счёта аккаунта.<br/><br/>Также во вкладке "Лидеры" отображаются игроки, набравшие больший общий счёт.<br/>Поскольку за раунд можно набрать максимум 5000 очков, общий счёт не может быть более 5000 очков.<br/><br/>Успехов!</p>
+</div>
+
+<div class="content" id="guestAccount" style="display: none; text-align: center;">
+	<h2>Аккаунт</h2>
+	<button id="reg_button" onclick="showPage('registration')">Регистрация</button></br>
+    <button id="login_button" onclick="showPage('login')">Вход</button></br>
+</div>
+
+<div class="content" id="loggedAccount" style="display: none; text-align: center;">
+	<h2 id="greetingsText"></h2>
+	<h2 id="accountPoints">Общий счёт: -</h2>
+	<button id="logout_button" onclick="showPage('changeName')">Изменить имя</button>
+	<button id="logout_button" onclick="logOut()">Выйти</button>
+</div>
+
+<div class="content" id="changeName" style="display: none; text-align: center;">
+	<form action="http://se.kobets.info/change_name" id="changeNameForm" onsubmit="return chgInputCheck(event)">
+		<label for="chg_username">Логин:</label></br>
+		<input type="text" id="chg_username" name="chg_username" onkeypress="return event.charCode != 32" maxlength="32" required ></br>
+		<label for="chg_password">Пароль:</label></br>
+		<input type="password" id="chg_password" name="chg_password" onkeypress="return event.charCode != 32" maxlength="32" required></br>
+		<label for="chg_name">Новое Имя:</label></br>
+		<input type="text" id="chg_name" name="chg_name" maxlength="32" required></br>
+		<button type="submit">Изменить имя</button>
+	</form>
+	<p id="chg_message" style="display: none; text-align: center;">Произошла ошибка, пожалуйста, проверьте правильность написания логина и пароля</p>
+</div>
+
+<div class="content" id="registration" style="display: none; text-align: center;">
+	<h2>Регистрация</h2>
+	<form id="registerForm" onsubmit="return regInputCheck(event)">
+		<label for="reg_username">Логин:</label></br>
+		<input type="text" id="reg_username" name="reg_username" onkeypress="return event.charCode != 32" maxlength="32" required ></br>
+		<label for="reg_password">Пароль:</label></br>
+		<input type="password" id="reg_password" name="reg_password" onkeypress="return event.charCode != 32" maxlength="32" required></br>
+		<label for="reg_name">Имя:</label></br>
+		<input type="text" id="reg_name" name="reg_name" maxlength="32" required></br>
+		<button type="submit">Зарегистрироваться</button>
+	</form>
+	<p id="reg_message" style="display: none; text-align: center;">Извините, данный логин уже зарегистрирован!</p>
+</div>
+
+<div class="content" id="login" style="display: none; text-align: center;">
+	<h2>Вход</h2>
+	<form id="loginForm" onsubmit="return loginCheck(event)">
+		<label for="login_username">Логин:</label></br>
+		<input type="text" id="login_username" name="login_username" onkeypress="return event.charCode != 32" maxlength="32" required></br>
+		<label for="login_password">Пароль:</label></br>
+		<input type="password" id="login_password" name="login_password" onkeypress="return event.charCode != 32" maxlength="32" required></br>
+		<button type="submit" id="loginButton">Войти</button>
+	</form>
+	<p id="login_message" style="display: none; text-align: center;">Регистрация прошла успешно, войдите, пожалуйста, в систему!</p>
+</div>
+
+<div class="content" id="leaderboard" style="display: none; text-align: center;">
+	<h2 style="font-size: 24px;">Таблица лидеров</h2>
+	<p id="leaderboardText"></p>
+</body>
+</html>

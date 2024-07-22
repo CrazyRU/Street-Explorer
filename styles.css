@@ -1,0 +1,218 @@
+.menu {
+	background-color: #333;
+    padding: 10px;
+    text-align: center;
+	top: 100px;
+}
+
+.menu button {
+    background-color: #555;
+    color: white;
+    padding: 5px 10px;
+    margin: 5px;
+    border: none;
+    cursor: pointer;
+}
+
+.menu button:hover {
+    background-color: #777;
+}
+
+body {
+    font-family: 'Open Sans', sans-serif;
+    font-size: 16px;
+    color: #333333;
+	left: 0px;
+	top: 0px;
+	margin: 0px;
+}
+
+h1 {
+    font-weight: bold;
+    font-size: 36px;
+	text-align: center;
+	background-color: #333;
+    padding: 10px;
+	color: #FFFFFF;
+	height: 25px;
+}
+
+h2 {
+    font-weight: bold;
+    font-size: 24px;
+}
+
+h3 {
+	font-size: 18px;
+	text-align: right;
+	background-color: #333;
+    padding: 10px;
+	color: #FFFFFF;
+	height: 25px;
+}
+
+p {
+    text-align: left;
+}
+
+strong {
+    color: #007bff;
+}
+
+a {
+    text-decoration: underline;
+    color: #007bff;
+}
+
+hr {
+    border: dotted 1px #d7d7d7;
+}
+
+.information-block {
+    background-color: #f9f9f9;
+    box-shadow: 2px 2px 3px rgba(0, 0, 0, 0.1);
+}
+
+button {
+    background-color: #555;
+    color: white;
+    padding: 5px 10px;
+    margin: 5px;
+    border: none;
+    cursor: pointer;
+}
+
+button:hover {
+    transform: scale(1.1);
+}
+
+img {
+    border: 1px solid #d7d7d7;
+    box-shadow: 2px 2px 3px rgba(0, 0, 0, 0.1);
+}
+		
+.container {
+  position: relative;
+}
+
+#map {
+  position: absolute;
+  top: 34.55%;
+  left: 73.55%;
+  width: 500px;
+  height: 500px;
+  z-index: 2;
+  clip: rect(350px, 500px, 475px, 275px);
+  transition: clip 0.5s;
+  cursor: crosshair;
+}
+
+#player1 {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100px;
+  height: 100px;
+  z-index: 1;
+}
+
+#nextRoundButton {
+	position: absolute;
+	top: 30%;
+	z-index: 2;
+	left: 50%;
+	-ms-transform: translate(-50%, -50%);
+	transform: translate(-50%, -50%);
+}
+
+#nextRoundButton:hover {
+	transform: translate(-50%, -50%) scale(1.1);
+}
+
+#confirmGuessButton {
+	position: absolute;
+	left: 94.2%;
+	z-index: 4;
+}
+
+#returnButton {
+	position: absolute;
+	left: 94.2%;
+	z-index: 4;
+}
+
+#currentRoundText {
+	position: absolute;
+	top: 88%;
+	z-index: 4;
+	left: 50%;
+	-ms-transform: translate(-50%, -50%);
+	transform: translate(-50%, -50%);
+}
+
+#endGameText {
+	position: absolute;
+	z-index: 4;
+	top: 280px;
+	left: 70%;
+	-ms-transform: translate(-50%, -50%);
+	transform: translate(-50%, -50%);
+}
+
+#accountWarning {
+	position: absolute;
+	z-index: 4;
+	top: 246px;
+	left: 50%;
+	-ms-transform: translate(-50%, -50%);
+	transform: translate(-50%, -50%);
+}
+
+#gameAccountWarning {
+	position: absolute;
+	z-index: 4;
+	top: 20px;
+	left: 50%;
+	-ms-transform: translate(-50%, -50%);
+	transform: translate(-50%, -50%);
+}
+
+#leaderboardText {
+	font-size: 24px;
+}
+
+#continueButton {
+	position: absolute;
+	z-index: 4;
+	top: 430px;
+	left: 70%;
+	-ms-transform: translate(-50%, -50%);
+	transform: translate(-50%, -50%);
+}
+
+#continueButton:hover {
+	transform: translate(-50%, -50%) scale(1.1);
+}
+
+#startGameButton {
+	text-align: center;
+}
+
+#registration {
+	text-align: center;
+}
+
+.astext {
+    background:none;
+    border:none;
+    margin:0;
+    padding: 10px;
+    cursor: pointer;
+	font-weight: bold;
+    font-size: 24px;
+	color: #333333;
+}
+
+.astext:hover {
+	text-decoration: underline;
+}
